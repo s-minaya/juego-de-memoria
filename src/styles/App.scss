@@ -90,3 +90,29 @@ width: 100%;
 max-width: 90px;
 filter: drop-shadow(0 3px 3px rgba(255, 100, 200, 0.3));
 }
+.back {
+  display: none;
+}
+
+.back {
+  display: none;
+}
+
+.card.reversed .front {
+  display: none;
+}
+
+.card.reversed .back {
+  display: block;
+}
+
+.card.solved{
+  background: linear-gradient(180deg, #ffe6fa,  #5a4a52);
+  .front {
+    display:none;
+  }
+  .back {
+    display: block;
+  }
+
+}
