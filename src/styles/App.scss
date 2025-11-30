@@ -5,23 +5,88 @@
 }
 
 :root {
-  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-family: "Gaegu", Arial, Helvetica, sans-serif;
 }
+
+
 
 body {
-  background-color: #555;
-  color: #fff;
+background: linear-gradient(180deg, #ffe6fa, #ffdff1 40%, #ffeefc);
+color: #5a4a52;
 }
+
+
+.app {
+display: flex;
+flex-direction: column;
+min-height: 100vh;
+}
+
 
 .header {
-  border-bottom: solid 5px darkcyan;
+border-bottom: 6px solid #ff9edc;
+text-align: center;
+padding: 1.5rem;
+background: #fff0fb;
 
-  .title {
-    line-height: 4rem;
-    padding-inline: 2rem;
-  }
+
+.title {
+font-size: 2.6rem;
+letter-spacing: 1px;
+color: #ff73c6;
+text-shadow: 0 2px 0 #fff;
+}
 }
 
+
 .main {
-  padding: 2rem;
+padding: 2rem;
+display: flex;
+justify-content: center;
+background: url("https://cdn.pixabay.com/photo/2021/03/02/04/29/ninja-6061459_960_720.png") repeat center center;
+background-size: 300px 300px;
+min-height: 100dvh;
+}
+
+
+.board {
+background: #fff7fd;
+width: 90%;
+max-width: 620px;
+margin-inline: auto;
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+list-style-type: none;
+gap: 1.2rem;
+padding: 1.2rem;
+border-radius: 1.6rem;
+border: 4px solid #ffb6e9;
+box-shadow: 0 6px 12px rgba(255, 150, 210, 0.3);
+}
+
+
+.card {
+background: #ffe9f7;
+border-radius: 1.4rem;
+padding: 1rem;
+display: flex;
+justify-content: center;
+align-items: center;
+transition: transform 0.2s ease, box-shadow 0.2s ease;
+cursor: pointer;
+border: 3px solid #ffc7ef;
+
+
+&:hover {
+transform: translateY(-6px) scale(1.05);
+box-shadow: 0 10px 18px rgba(255, 150, 220, 0.4);
+background: #ffe0f3;
+}
+}
+
+
+.card-img {
+width: 100%;
+max-width: 90px;
+filter: drop-shadow(0 3px 3px rgba(255, 100, 200, 0.3));
 }
