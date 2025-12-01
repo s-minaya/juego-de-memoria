@@ -134,7 +134,7 @@ function App() {
               <div className="front">
                 <img
                   className="card-img"
-                  src="/images/signo-de-interrogacion.png"
+                  src="./images/signo-de-interrogacion.png"
                   alt="signo-de-interrogacion"
                 />
               </div>
@@ -142,7 +142,7 @@ function App() {
               <div className="back">
                 <img
                   className="card-img"
-                  src={`/images/${cardObj.image}`}
+                  src={`./images/${cardObj.image}`}
                   alt={altTexts[cardObj.image]}
                 />
               </div>
