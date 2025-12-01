@@ -1,42 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../styles/App.scss";
 
-const images = ["nigiris.png", "ramen.png", "sushi.png"]
-const cards = [{
-  id: 1,
-  image: "nigiris.png",
-  class: ""
-},
-{
-  id: 2,
-  image: "ramen.png",
-  class: ""
-},
-{
-  id: 3,
-  image: "nigiris.png",
-  class: ""
-},
-{
-  id: 4,
-  image: "nigiris.png",
-  class: ""
-},
-{
-  id: 5,
-  image: "ramen.png",
-  class: ""
-},
-{
-  id: 6,
-  image: "nigiris.png",
-  class: ""
-}
-]
+const images = ["nigiris.png", "ramen.png", "sushi.png"];
+
+const cards = [...images, ...images].map((image, index) => ({
+  id: index,
+  image: image,
+  class: "",
+}));
+
 
 function App() {
 
-  const [boardCards, setBoardCards] = useState(cards);
+  const generatedBoard = () =>
+  [...images, ...images]
+  .map((image, index) => ({
+    id: index + "-" + Math.random(), //id único real
+    image,
+    class:"",
+  })).sort(() => Math.random() - 0.5);
+
+  const [boardCards, setBoardCards] = useState(generatedBoard());
+  const [moves, setMoves] = useState(0);
+  const [hasWon, setHasWon] = useState(false);
 
   const altTexts = {
     "nigiris.png": "icono de nigiri",
@@ -44,43 +30,43 @@ function App() {
     "sushi.png": "icono de sushi"
   };
   const checkCards = () => {
-        // Localizar las cartas ya volteadas
-   const [card1, card2] = boardCards.filter(card => card.class==="reversed");
-   console.log({card1,card2});
+    // Localizar las cartas ya volteadas
+    const [card1, card2] = boardCards.filter(card => card.class === "reversed");
 
-   if(card1.image !== card2.image) {
-    //No son iguales
+    if (card1.image === card2.image) {
+      // Son iguales
 
-    card1.class = "";
-    card2.class ="";
-   }
-   else {
       card1.class = "solved";
-    card2.class ="solved";
+      card2.class = "solved";
+    }
+    else {
+      card1.class = "";
+      card2.class = "";
 
-   }
+    }
 
-   setBoardCards([...boardCards]);
-   
+    setBoardCards([...boardCards]);
+    setMoves((move) => move + 1);
 
-  }
+
+  };
 
   const handleClick = (ev) => {
+    if (hasWon) return; //no permitir clicks tras victoria
 
     // Localizar las cartas ya volteadas
-   const reversedCards = boardCards.filter(card => card.class==="reversed")
+    const reversedCards = boardCards.filter(card => card.class === "reversed");
 
-   if (reversedCards.length >=2) {
-    return;
-   }
-     //1. Localizar la carta
-    const cardId = parseInt(ev.currentTarget.id);
+    if (reversedCards.length >= 2) {
+      return;
+    }
+    //1. Localizar la carta
+    const cardId = ev.currentTarget.id;
     const clickedCard = boardCards.find((card) => card.id === cardId);
 
-    console.log(clickedCard);
-
     //2. Cambiar el obj de esa carta
-    clickedCard.class = "reversed";
+   if (!clickedCard || clickedCard.class === "reversed") return;
+   clickedCard.class = "reversed";
 
     //3. Guardar una copia del array de datos en la variable de estado
     setBoardCards([...boardCards]);
@@ -88,15 +74,38 @@ function App() {
     // Si en este evento ya había una carta volteada
     // y le acabamos de dar la vuelta a la otra
 
-    if(reversedCards.length===1){
+    if (reversedCards.length === 1) {
       setTimeout(checkCards, 1000);
     }
 
+  };
+
+  // Detectar si todas están resueltas
+  useEffect (() => {
+    const solvedCount = boardCards.filter((card) => card.class === "solved").length;
+    if (solvedCount === boardCards.length && boardCards.length>0) {
+      setHasWon(true);
+    }
+  }, [boardCards]);
+
+  // RESET
+
+  const resetGame = () => {
+    setBoardCards(generatedBoard());
+    setMoves(0);
+    setHasWon(false);
   }
   return (
     <div className="app">
       <header className="header">
         <h1 className="title">Juego de memoria</h1>
+        <div className="hud">
+          <p className="moves">Intentos: {moves}</p>
+          <button className="reset-btn" onClick={resetGame}>Reiniciar</button>
+        </div>
+        {hasWon && (
+          <p className="win-message">¡Has ganado!</p>
+        )}
       </header>
       <main className="main">
         <ul className="board">
@@ -110,7 +119,7 @@ function App() {
               <div className="front">
                 <img
                   className="card-img"
-                  src="/src/images/signo-de-interrogacion.png"
+                  src="/images/signo-de-interrogacion.png"
                   alt="signo-de-interrogacion"
                 />
               </div>
@@ -118,7 +127,7 @@ function App() {
               <div className="back">
                 <img
                   className="card-img"
-                  src={`/src/images/${cardObj.image}`}
+                  src={`/images/${cardObj.image}`}
                   alt={altTexts[cardObj.image]}
                 />
               </div>

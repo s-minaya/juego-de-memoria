@@ -151,3 +151,39 @@ filter: drop-shadow(0 3px 3px rgba(255, 100, 200, 0.3));
 .card.solved .back {
   display: block;
 }
+
+.hud {
+  margin-top: 0.6rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.4rem;
+  align-items: center;
+}
+
+.moves {
+  font-size: 1.4rem;
+  color: #ff56bd;
+}
+
+.reset-btn {
+  background: #ff8edb;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  color: white;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+
+  &:hover {
+    background: #ff73c6;
+    transform: scale(1.05);
+  }
+}
+
+.win-message {
+  margin-top: 1rem;
+  font-size: 1.6rem;
+  color: #ff38a7;
+  text-shadow: 0 1px 0 white;
+}
