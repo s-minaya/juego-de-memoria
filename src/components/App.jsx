@@ -1,20 +1,23 @@
 import { useEffect, useState } from "react";
 import "../styles/App.scss";
+import questionMark from "../images/signo-de-interrogacion.png"
+import nigiri from "../images/nigiris.png"
+import ramen from "../images/ramen.png"
+import sushi from "../images/sushi.png"
 
-const images = ["nigiris.png", "ramen.png", "sushi.png"];
-
-const cards = [...images, ...images].map((image, index) => ({
-  id: index,
-  image: image,
-  class: "",
-}));
+const images = [
+  { id: "nigiri", img: nigiri, alt: "icono de nigiri" },
+  { id: "ramen", img: ramen, alt: "icono de ramen" },
+  { id: "sushi", img: sushi, alt: "icono de sushi" },
+];
 
 function App() {
   const generatedBoard = () =>
     [...images, ...images]
-      .map((image, index) => ({
-        id: index + "-" + Math.random(), //id único real
-        image,
+      .map((item) => ({
+        id: item.id + "-" + Math.random(),
+        img: item.img,
+        alt: item.alt,
         class: "",
       }))
       .sort(() => Math.random() - 0.5);
@@ -26,18 +29,13 @@ function App() {
 
   const MAX_MOVES = 6;
 
-  const altTexts = {
-    "nigiris.png": "icono de nigiri",
-    "ramen.png": "icono de ramen",
-    "sushi.png": "icono de sushi",
-  };
   const checkCards = () => {
     // Localizar las cartas ya volteadas
     const [card1, card2] = boardCards.filter(
       (card) => card.class === "reversed"
     );
 
-    if (card1.image === card2.image) {
+    if (card1.img === card2.img) {
       // Son iguales
 
       card1.class = "solved";
@@ -132,19 +130,11 @@ function App() {
               onClick={handleClick}
             >
               <div className="front">
-                <img
-                  className="card-img"
-                  src="/juego-de-memoria/images/signo-de-interrogacion.png"
-                  alt="signo-de-interrogacion"
-                />
+                <img className="card-img" src={questionMark} alt="signo-de-interrogacion" />
               </div>
 
               <div className="back">
-                <img
-                  className="card-img"
-                  src={`/juego-de-memoria/images/${cardObj.image}`}
-                  alt={altTexts[cardObj.image]}
-                />
+                <img className="card-img" src={cardObj.img} alt={cardObj.alt} />
               </div>
             </li>
           ))}
