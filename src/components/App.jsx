@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import "../styles/App.scss";
-import questionMark from "../images/signo-de-interrogacion.png"
-import nigiri from "../images/nigiris.png"
-import ramen from "../images/ramen.png"
-import sushi from "../images/sushi.png"
+import questionMark from "../../public/images/signo-de-interrogacion.png"
+import nigiri from "../../public/images/nigiris.png"
+import ramen from "../../public/images/ramen.png"
+import sushi from "../../public/images/sushi.png"
 
 const images = [
   { id: "nigiri", img: nigiri, alt: "icono de nigiri" },
@@ -16,6 +16,7 @@ function App() {
     [...images, ...images]
       .map((item) => ({
         id: item.id + "-" + Math.random(),
+        pair: item.id,
         img: item.img,
         alt: item.alt,
         class: "",
@@ -35,7 +36,7 @@ function App() {
       (card) => card.class === "reversed"
     );
 
-    if (card1.img === card2.img) {
+    if (card1.pair === card2.pair) {
       // Son iguales
 
       card1.class = "solved";

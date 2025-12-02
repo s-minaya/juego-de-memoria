@@ -33,7 +33,7 @@ Un pequeño juego de memoria hecho con **React**, donde debes encontrar todas la
 ## 📦 Instalación
 
 ```bash
-git clone https://github.com/tu-usuario/tu-repo.git
+git clone https://github.com/s-minaya/juego-de-memoria.git
 cd tu-repo
 npm install
 npm run dev
